@@ -5,7 +5,7 @@ namespace HandGestureRecord.GestureInput
     /// <summary>
     /// OVRSkeletonを利用した手のデータ.
     /// </summary>
-    public class HandData
+    public class QuestHandData : HandDataBase
     {
         readonly OVRSkeleton handSkeleton;
         readonly OVRSkeleton.BoneId[] thumb;
@@ -15,7 +15,7 @@ namespace HandGestureRecord.GestureInput
         readonly OVRSkeleton.BoneId[] pinky;
 
         
-        public HandData(
+        public QuestHandData(
             OVRSkeleton skeleton)
         {
             handSkeleton = skeleton;
@@ -65,55 +65,63 @@ namespace HandGestureRecord.GestureInput
         
         
         /// <summary>
-        /// 指定したすべてのBoneIdが直線状にああるか否か.
+        /// 指定した指のIdからVector3の配列を取得.
         /// </summary>
-        /// <param name="threshold">閾値, 1に近いほど判定が厳しい.</param>
-        /// <param name="boneIds">BoneIdの配列.</param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        bool IsStraight(
-            float threshold,
-            params OVRSkeleton.BoneId[] boneIds)
+        protected override Vector3[] CreatePositionFingerPositionArray(
+            FingerId id)
         {
-            // 3未満の要素は計算に入れない.
-            if (boneIds.Length < 3) return false;
-
-            Vector3? lastVec = null;
-            var dot = 1.0f;
-            for (var i = 0; i < boneIds.Length - 1; ++i)
+            OVRSkeleton.BoneId[] sourceFinger = null;
+            switch (id)
             {
-                Vector3 v = (handSkeleton.Bones[(int)boneIds[i + 1]].Transform.position - handSkeleton.Bones[(int)boneIds[i]].Transform.position).normalized;
-                if (lastVec.HasValue)
-                {
-                    // 内積の値を総乗する.
-                    dot *= Vector3.Dot(v, lastVec.Value);
-                }
-                lastVec = v;
+                case FingerId.Thumb: sourceFinger = thumb; break;
+                case FingerId.Index: sourceFinger = index; break;
+                case FingerId.Middle: sourceFinger = middle; break;
+                case FingerId.Ring: sourceFinger = ring; break;
+                case FingerId.Pinky: sourceFinger = pinky; break;
             }
-            return threshold <= dot;
-        }
+            if (sourceFinger == null) return null;
 
+            Vector3[] ret = new Vector3[sourceFinger.Length];
+            for (var i = 0; i < ret.Length; ++i)
+            {
+                ret[i] = handSkeleton.Bones[(int) sourceFinger[i]].Transform.position;
+            }
+
+            return ret;
+        }
+        
 
         /// <summary>
         /// 指定したFingerIdの指がまっすぐになっているか判定.
         /// </summary>
         /// <param name="threshold">閾値, 1に近いほど判定が厳しい.</param>
-        /// <param name="id"></param>
+        /// <param name="fingerId"></param>
         /// <returns></returns>
-        public bool IsFingerStraight(
+        public override bool IsFingerStraight(
             float threshold,
-            FingerId id)
+            FingerId fingerId)
         {
-            bool ret = false;
-            switch (id)
-            {
-                case FingerId.Thumb: ret = IsStraight(threshold, thumb); break;
-                case FingerId.Index: ret = IsStraight(threshold, index); break;
-                case FingerId.Middle: ret = IsStraight(threshold, middle); break;
-                case FingerId.Ring: ret = IsStraight(threshold, ring); break;
-                case FingerId.Pinky: ret = IsStraight(threshold, pinky); break;
-            }
-            return ret;
+            Vector3[] array = this.CreatePositionFingerPositionArray(fingerId);
+            if (array == null) return false;
+            
+            // 3未満の要素は計算に入れない.
+            if (array.Length < 3) return false;
+
+            return threshold <= this.DotByFingerDirection(array);
         }
 
+
+        /// <summary>
+        ///　指定した指のIDからどれくらい指を伸ばしているかを取得.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public override float GetDotByFinger(
+            FingerId id)
+        {
+            return this.DotByFingerDirection(this.CreatePositionFingerPositionArray(id));
+        }
     }
 }
