@@ -2,7 +2,6 @@
 
 namespace HandGestureRecord.GestureInput
 {
-    #if false
     /// <summary>
     /// OVRSkeletonを利用した手のデータ.
     /// </summary>
@@ -117,5 +116,4 @@ namespace HandGestureRecord.GestureInput
         }
 
     }
-#endif
 }
