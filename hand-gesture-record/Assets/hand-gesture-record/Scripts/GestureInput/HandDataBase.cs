@@ -8,6 +8,7 @@ namespace HandGestureRecord.GestureInput
         /// <summary>
         /// 0 ~ 1 での各指の伸ばし具合の値,1に近づくほど伸ばしている.
         /// </summary>
+        [System.Serializable]
         public struct FingerStraightInfo
         {
             public bool thumb;
@@ -16,7 +17,6 @@ namespace HandGestureRecord.GestureInput
             public bool ring;
             public bool pinky;
         };
-        
         
         
         protected float DotByFingerDirection(

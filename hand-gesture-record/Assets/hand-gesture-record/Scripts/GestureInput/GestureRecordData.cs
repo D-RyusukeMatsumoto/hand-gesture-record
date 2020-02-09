@@ -5,6 +5,7 @@ namespace HandGestureRecord.GestureInput
     /// <summary>
     /// 記録したジェスチャーデータ.
     /// </summary>
+    [System.Serializable]
     public class GestureRecordData : ScriptableObject
     {
         [SerializeField] HandDataBase.FingerStraightInfo data;
