@@ -10,11 +10,11 @@ namespace HandGestureRecord.GestureInput
         /// </summary>
         public struct FingerStraightRatioInfo
         {
-            public float thumb;
-            public float index;
-            public float middle;
-            public float ring;
-            public float pinky;
+            public bool thumb;
+            public bool index;
+            public bool middle;
+            public bool ring;
+            public bool pinky;
         };
         
         
@@ -41,7 +41,7 @@ namespace HandGestureRecord.GestureInput
         protected abstract Vector3[] CreatePositionFingerPositionArray(FingerId id);
         public abstract bool IsFingerStraight(float threshold, FingerId id);
         public abstract float GetDotByFinger(FingerId id);
-        public abstract FingerStraightRatioInfo GetFingerStraightInfo();
+        public abstract FingerStraightRatioInfo GetFingerStraightInfo(float threshold);
 
     }
 }
