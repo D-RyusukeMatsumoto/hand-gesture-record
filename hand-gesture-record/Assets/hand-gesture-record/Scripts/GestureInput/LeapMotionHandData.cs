@@ -9,14 +9,6 @@ namespace HandGestureRecord.GestureInput
     public class LeapMotionHandData : HandDataBase, IFingerInfo
     {
 
-        // 右手か左手か.
-        public enum HandId
-        {
-            LeftHand,
-            RightHand,
-        }
-
-
         HandId handId;
         LeapServiceProvider provider;
         Hand hand;
