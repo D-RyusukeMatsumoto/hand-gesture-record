@@ -6,7 +6,7 @@ using Leap.Unity;
 
 namespace HandGestureRecord.GestureInput
 {
-    public class LeapMotionHandData : HandDataBase
+    public class LeapMotionHandData : HandDataBase, IFingerInfo
     {
 
         // 右手か左手か.
@@ -78,7 +78,7 @@ namespace HandGestureRecord.GestureInput
                 case FingerId.Thumb: sourceFinger = thumb; break;
                 case FingerId.Index: sourceFinger = index; break;
                 case FingerId.Middle: sourceFinger = middle; break;
-                case FingerId.Ring: sourceFinger = middle; break;
+                case FingerId.Ring: sourceFinger = ring; break;
                 case FingerId.Pinky: sourceFinger = pinky; break;
             }
             if (sourceFinger == null) return null;
@@ -137,7 +137,23 @@ namespace HandGestureRecord.GestureInput
             this.Update();
             return this.DotByFingerDirection(this.CreatePositionFingerPositionArray(id));            
         }
+
         
-        
+        /// <summary>
+        /// 指の直線の比率をまとめたデータの取得.
+        /// </summary>
+        /// <returns></returns>
+        public FingerStraightRatioInfo GetFingerStraightInfo()
+        {
+            this.Update();
+            return new FingerStraightRatioInfo
+            {
+                thumb = this.GetDotByFinger(FingerId.Thumb),
+                index = this.GetDotByFinger(FingerId.Index),
+                middle = this.GetDotByFinger(FingerId.Middle),
+                ring = this.GetDotByFinger(FingerId.Ring),
+                pinky = this.GetDotByFinger(FingerId.Pinky)
+            };
+        }
     }
 }
