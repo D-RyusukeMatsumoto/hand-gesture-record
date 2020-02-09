@@ -5,9 +5,11 @@ namespace HandGestureRecord.GestureInput
 {
     public abstract class HandDataBase
     {
+        /// <summary>
+        /// 0 ~ 1 での各指の伸ばし具合の値,1に近づくほど伸ばしている.
+        /// </summary>
         public struct FingerStraightRatioInfo
         {
-            // 0 ~ 1 での指の伸ばし具合の値,1に行くほど伸ばしている.
             public float thumb;
             public float index;
             public float middle;
@@ -39,5 +41,7 @@ namespace HandGestureRecord.GestureInput
         protected abstract Vector3[] CreatePositionFingerPositionArray(FingerId id);
         public abstract bool IsFingerStraight(float threshold, FingerId id);
         public abstract float GetDotByFinger(FingerId id);
+        public abstract FingerStraightRatioInfo GetFingerStraightInfo();
+
     }
 }
