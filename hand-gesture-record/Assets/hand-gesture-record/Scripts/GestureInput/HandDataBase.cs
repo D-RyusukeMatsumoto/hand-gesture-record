@@ -5,9 +5,19 @@ namespace HandGestureRecord.GestureInput
 {
     public abstract class HandDataBase
     {
+        public struct FingerStraightRatioInfo
+        {
+            // 0 ~ 1 での指の伸ばし具合の値,1に行くほど伸ばしている.
+            public float thumb;
+            public float index;
+            public float middle;
+            public float ring;
+            public float pinky;
+        };
         
         
-        public float DotByFingerDirection(
+        
+        protected float DotByFingerDirection(
             params Vector3[] positions)
         {
             if (positions == null) return 0f;
