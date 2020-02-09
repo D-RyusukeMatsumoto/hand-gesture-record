@@ -6,7 +6,7 @@ using Leap.Unity;
 
 namespace HandGestureRecord.GestureInput
 {
-    public class LeapMotionHandData : HandDataBase, IFingerInfo
+    public class LeapMotionHandData : HandDataBase
     {
 
         HandId handId;
@@ -32,6 +32,7 @@ namespace HandGestureRecord.GestureInput
         // とりあえずの更新処理.
         public void Update()
         {
+            hand = null;
             foreach (var frameHand in provider.CurrentFrame.Hands)
             {
                 if (frameHand.IsLeft && handId == HandId.LeftHand)
@@ -64,6 +65,8 @@ namespace HandGestureRecord.GestureInput
         protected override Vector3[] CreatePositionFingerPositionArray(
             FingerId id)
         {
+            if (hand == null) return null;
+
             Finger sourceFinger = null;
             switch (id)
             {
@@ -79,7 +82,7 @@ namespace HandGestureRecord.GestureInput
             Vector3[] ret = new Vector3[sourceFinger.bones.Length];
             if (id == FingerId.Thumb)
             {
-                ret[0] = hand.Arm.WristPosition.ToVector3();
+                ret[0] = hand.WristPosition.ToVector3();
                 for (var i = 1; i < ret.Length; ++i)
                 {
                     ret[i] = sourceFinger.bones[i].Basis.translation.ToVector3();
@@ -135,7 +138,7 @@ namespace HandGestureRecord.GestureInput
         /// 指の直線の比率をまとめたデータの取得.
         /// </summary>
         /// <returns></returns>
-        public FingerStraightRatioInfo GetFingerStraightInfo()
+        public override FingerStraightRatioInfo GetFingerStraightInfo()
         {
             this.Update();
             return new FingerStraightRatioInfo
@@ -147,5 +150,6 @@ namespace HandGestureRecord.GestureInput
                 pinky = this.GetDotByFinger(FingerId.Pinky)
             };
         }
+
     }
 }
