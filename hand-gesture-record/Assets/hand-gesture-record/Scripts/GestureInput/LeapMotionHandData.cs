@@ -78,23 +78,15 @@ namespace HandGestureRecord.GestureInput
             }
             if (sourceFinger == null) return null;
 
-            // 親指の時は付け根を手首の座標に挿げ替える.
             Vector3[] ret = new Vector3[sourceFinger.bones.Length];
             if (id == FingerId.Thumb)
             {
+                // 親指の時は付け根を手首の座標に挿げ替える.
                 ret[0] = hand.WristPosition.ToVector3();
                 for (var i = 1; i < sourceFinger.bones.Length; ++i)
                 {
                     ret[i] = sourceFinger.bones[i].Basis.translation.ToVector3();
                 }
-
-                string a = "";
-                for (var i = 0; i < ret.Length; ++i)
-                {
-                    a += $"{i} : " + ret[i].ToString() + "\n";
-                }
-
-                Debug.Log(a);
             }
             else
             {
