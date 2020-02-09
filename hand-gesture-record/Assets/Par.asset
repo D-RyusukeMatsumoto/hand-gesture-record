@@ -12,3 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bc838d7878647b392c960ddf04976fa, type: 3}
   m_Name: Par
   m_EditorClassIdentifier: 
+  data:
+    thumb: 1
+    index: 1
+    middle: 1
+    ring: 1
+    pinky: 1

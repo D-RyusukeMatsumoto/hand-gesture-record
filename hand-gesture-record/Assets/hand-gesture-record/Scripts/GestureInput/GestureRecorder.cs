@@ -16,7 +16,10 @@ namespace HandGestureRecord.GestureInput
 #if UNITY_EDITOR
         GestureManager manager;
 
-        [SerializeField] KeyCode keyCode = KeyCode.Space;
+        [SerializeField] HandId handId;
+        [SerializeField] float threshold;
+        
+        
         
         void Start()
         {
@@ -24,12 +27,6 @@ namespace HandGestureRecord.GestureInput
         }
 
         
-        void FixedUpdate()
-        {
-        }
-
-
-
         /// <summary>
         /// レコード部分インスペクタ拡張.
         /// </summary>
@@ -42,31 +39,58 @@ namespace HandGestureRecord.GestureInput
             {
                 var component = target as GestureRecorder;
 
-                component.keyCode = (KeyCode) EditorGUILayout.EnumPopup("録画操作キーコード", component.keyCode);
-            
+                component.handId = (HandId)EditorGUILayout.EnumPopup("HandId", component.handId);
+                component.threshold = EditorGUILayout.Slider("Threshold", component.threshold, 0.1f, 1f);
                 
                 if (isRecoredStarted)
                 {
                     if (GUILayout.Button("録画終了"))
                     {
                         // パスを指定するウィンドウを表示してScriptableObjectで保存.
-                        isRecoredStarted = false;
+
+                        // TODO : 一定期間での指の動作でのジェスチャ作成の時までは録画ボタンを押下した瞬間の指の状態だけをとることとする.
+                        //isRecoredStarted = false;
                     }
                 }
                 else
                 {
                     if (GUILayout.Button("録画開始") && EditorApplication.isPlaying)
                     {
-                        isRecoredStarted = true;
+                        // ここで保存.
+                        this.SaveFile(component);
+
+                        // TODO : 一定期間での指の動作でのジェスチャ作成の時までは録画ボタンを押下した瞬間の指の状態だけをとることとする.
+                        //isRecoredStarted = true;
                     }
                 }
             }
             
-            
-            
+
+            /// <summary>
+            /// ジェスチャファイルの保存.
+            /// </summary>
+            void SaveFile(
+                GestureRecorder component)
+            {
+                var filePath = EditorUtility.SaveFilePanel("SaveGestureFile", Application.dataPath, "anyFile", "asset");
+                if (string.IsNullOrEmpty(filePath))
+                    return;
+
+                var fingerStraightInfo = new HandDataBase.FingerStraightInfo
+                {
+                    thumb = component.manager.IsFingerStraight(component.handId, FingerId.Thumb, component.threshold),
+                    index = component.manager.IsFingerStraight(component.handId, FingerId.Index, component.threshold),
+                    middle = component.manager.IsFingerStraight(component.handId, FingerId.Middle, component.threshold),
+                    ring = component.manager.IsFingerStraight(component.handId, FingerId.Ring, component.threshold),
+                    pinky = component.manager.IsFingerStraight(component.handId, FingerId.Pinky, component.threshold)
+                };
+                var instance = new GestureRecordData(fingerStraightInfo);
+                
+                AssetDatabase.CreateAsset(instance, filePath.Replace(Application.dataPath, "Assets"));
+                AssetDatabase.Refresh();
+            }
             
         }
-
 
 #endif
     }

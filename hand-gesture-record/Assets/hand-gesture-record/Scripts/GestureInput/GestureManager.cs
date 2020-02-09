@@ -20,15 +20,16 @@ namespace HandGestureRecord.GestureInput
         // とりあえずインスペクターでセットする.
         [SerializeField] LeapServiceProvider provider;
 
-        GestureRecordData testData;
+        // TODO : テスト用データ.
+        [SerializeField] GestureRecordData gu;
+        [SerializeField] GestureRecordData choki;
+        [SerializeField] GestureRecordData par;
         
         
         void Awake()
         {
             ManagerProvider.RegisterRuntimeManager(this);
             DontDestroyOnLoad(gameObject);
-
-            testData = ScriptableObject.CreateInstance<GestureRecordData>();
         }
 
 
@@ -60,7 +61,9 @@ namespace HandGestureRecord.GestureInput
             DebugWindow.SetDebugInfo("Ring", $"Ring {ring} : {rightHand.GetDotByFinger(FingerId.Ring)}");
             DebugWindow.SetDebugInfo("Pinky", $"Pinky {pinky} : {rightHand.GetDotByFinger(FingerId.Pinky)}");
 
-            DebugWindow.SetDebugInfo("Gesture", $"Gu {this.CorrectGesture(HandId.RightHand, testData.Data)}");
+            DebugWindow.SetDebugInfo("Gesture - Gu", $"グー {this.CorrectGesture(HandId.RightHand, gu.Data)}");
+            DebugWindow.SetDebugInfo("Gesture - Choki", $"チョキ {this.CorrectGesture(HandId.RightHand, choki.Data)}");
+            DebugWindow.SetDebugInfo("Gesture - Par", $"パー {this.CorrectGesture(HandId.RightHand, par.Data)}");
         }
 
 
