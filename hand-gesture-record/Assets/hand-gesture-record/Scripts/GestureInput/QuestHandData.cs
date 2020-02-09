@@ -123,5 +123,24 @@ namespace HandGestureRecord.GestureInput
         {
             return this.DotByFingerDirection(this.CreatePositionFingerPositionArray(id));
         }
+
+        
+        /// <summary>
+        /// 指の直線の比率をまとめたデータの取得.
+        /// </summary>
+        /// <returns></returns>
+        public override FingerStraightInfo GetFingerStraightInfo(
+            float threshold)
+        {
+            return new FingerStraightInfo
+            {
+                thumb = this.IsFingerStraight(threshold, FingerId.Thumb),
+                index = this.IsFingerStraight(threshold, FingerId.Index),
+                middle = this.IsFingerStraight(threshold, FingerId.Middle),
+                ring = this.IsFingerStraight(threshold, FingerId.Ring),
+                pinky = this.IsFingerStraight(threshold, FingerId.Pinky)
+            };
+        }
+        
     }
 }

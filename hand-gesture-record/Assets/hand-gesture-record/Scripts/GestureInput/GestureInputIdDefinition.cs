@@ -12,4 +12,12 @@
         Pinky
     }
 
+    
+    // 右手か左手か.
+    public enum HandId
+    {
+        LeftHand,
+        RightHand,
+    }
+
 }
