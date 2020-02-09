@@ -138,11 +138,11 @@ namespace HandGestureRecord.GestureInput
         /// 指の直線の比率をまとめたデータの取得.
         /// </summary>
         /// <returns></returns>
-        public override FingerStraightRatioInfo GetFingerStraightInfo(
+        public override FingerStraightInfo GetFingerStraightInfo(
             float threshold)
         {
             this.Update();
-            return new FingerStraightRatioInfo
+            return new FingerStraightInfo
             {
                 thumb = this.IsFingerStraight(threshold, FingerId.Thumb),
                 index = this.IsFingerStraight(threshold,FingerId.Index),

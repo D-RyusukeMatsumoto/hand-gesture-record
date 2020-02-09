@@ -7,13 +7,13 @@ namespace HandGestureRecord.GestureInput
     /// </summary>
     public class GestureRecordData : ScriptableObject
     {
-        [SerializeField] HandDataBase.FingerStraightRatioInfo fingerStraightRatioInfo;
-        public HandDataBase.FingerStraightRatioInfo FingerStraightRatio => fingerStraightRatioInfo;
+        [SerializeField] HandDataBase.FingerStraightInfo data;
+        public HandDataBase.FingerStraightInfo Data => data;
 
         public GestureRecordData(
-            HandDataBase.FingerStraightRatioInfo argFingerStraightRatioInfo)
+            HandDataBase.FingerStraightInfo argData)
         {
-            fingerStraightRatioInfo = argFingerStraightRatioInfo;
+            data = argData;
         }
 
     }

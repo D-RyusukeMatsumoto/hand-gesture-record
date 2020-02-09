@@ -60,7 +60,25 @@ namespace HandGestureRecord.GestureInput
             DebugWindow.SetDebugInfo("Ring", $"Ring {ring} : {rightHand.GetDotByFinger(FingerId.Ring)}");
             DebugWindow.SetDebugInfo("Pinky", $"Pinky {pinky} : {rightHand.GetDotByFinger(FingerId.Pinky)}");
 
-            DebugWindow.SetDebugInfo("Gesture", $"Gu {this.CorrectGesture(HandId.RightHand, testData.FingerStraightRatio)}");
+            DebugWindow.SetDebugInfo("Gesture", $"Gu {this.CorrectGesture(HandId.RightHand, testData.Data)}");
+        }
+
+
+        /// <summary>
+        /// 指定した指が伸びているか否か.
+        /// </summary>
+        /// <param name="handId"></param>
+        /// <param name="fingerId"></param>
+        /// <param name="threshold"></param>
+        /// <returns></returns>
+        public bool IsFingerStraight(
+            HandId handId,
+            FingerId fingerId,
+            float threshold)
+        {
+            return (handId == HandId.LeftHand)
+                ? leftHand.IsFingerStraight(threshold, fingerId)
+                : rightHand.IsFingerStraight(threshold, fingerId);
         }
 
         
@@ -72,11 +90,12 @@ namespace HandGestureRecord.GestureInput
         /// <returns></returns>
         public bool CorrectGesture(
             HandId leftRight,
-            HandDataBase.FingerStraightRatioInfo targetGesture, 
+            HandDataBase.FingerStraightInfo targetGesture, 
             float threshold = 0.8f)
         {
-            HandDataBase.FingerStraightRatioInfo fingerStraightInfo = (leftRight == HandId.LeftHand) ? 
-                leftHand.GetFingerStraightInfo(threshold) : rightHand.GetFingerStraightInfo(threshold);
+            HandDataBase.FingerStraightInfo fingerStraightInfo = (leftRight == HandId.LeftHand) 
+                ? leftHand.GetFingerStraightInfo(threshold) 
+                : rightHand.GetFingerStraightInfo(threshold);
 
             bool[] fingerStraightRatios = new[]
             {
