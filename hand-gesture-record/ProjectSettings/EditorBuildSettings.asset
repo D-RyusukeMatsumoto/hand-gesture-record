@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/hand-gesture-record/Scenes/OculusQuest.unity
+    guid: 85495a63b7b11da47b7b7e53598e8fbd
   m_configObjects: {}

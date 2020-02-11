@@ -103,7 +103,10 @@ namespace HandGestureRecord.GestureInput
             float threshold,
             FingerId fingerId)
         {
-            Vector3[] array = this.CreatePositionFingerPositionArray(fingerId);
+            Vector3[] array = null;
+#if UNITY_ANDROID && !UNITY_EDITOR
+            array = this.CreatePositionFingerPositionArray(fingerId);
+#endif
             if (array == null) return false;
             
             // 3未満の要素は計算に入れない.
@@ -121,10 +124,13 @@ namespace HandGestureRecord.GestureInput
         public override float GetDotByFinger(
             FingerId id)
         {
+#if UNITY_ANDROID && !UNITY_EDITOR
             return this.DotByFingerDirection(this.CreatePositionFingerPositionArray(id));
+#endif
+            return 0f;
         }
 
-        
+
         /// <summary>
         /// 指の直線の比率をまとめたデータの取得.
         /// </summary>
@@ -132,6 +138,7 @@ namespace HandGestureRecord.GestureInput
         public override FingerStraightInfo GetFingerStraightInfo(
             float threshold)
         {
+#if UNITY_ANDROID && !UNITY_EDITOR
             return new FingerStraightInfo
             {
                 thumb = this.IsFingerStraight(threshold, FingerId.Thumb),
@@ -140,6 +147,8 @@ namespace HandGestureRecord.GestureInput
                 ring = this.IsFingerStraight(threshold, FingerId.Ring),
                 pinky = this.IsFingerStraight(threshold, FingerId.Pinky)
             };
+#endif
+            return new FingerStraightInfo { };
         }
         
     }
