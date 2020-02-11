@@ -18,8 +18,9 @@ namespace HandGestureRecord.GestureInput
         HandDataBase rightHand;
         
         // とりあえずインスペクターでセットする.
+#if !UNITY_ANDROID && UNITY_EDITOR
         [SerializeField] LeapServiceProvider provider;
-
+#endif
         // TODO : テスト用データ.
         [SerializeField] GestureRecordData gu;
         [SerializeField] GestureRecordData choki;
@@ -35,11 +36,11 @@ namespace HandGestureRecord.GestureInput
 
         void Start()
         {
-#if !UNITY_EDITOR
+#if UNITY_ANDROID
             // TODO : 今回のプロジェクトではQuestのPlayerはまだ実装していないのでここはコメントアウトしておく.
-            leftHand = new QuestHandData(GameManager.GetPlayer().GetSkeleton(Player.SkeletonId.LeftHandSkeleton));
-            rightHand = new QuestHandData(GameManager.GetPlayer().GetSkeleton(Player.SkeletonId.RightHandSkeleton));
-#elif UNITY_EDITOR
+            leftHand = new QuestHandData(ManagerProvider.GetPlayer().GetSkeleton(Player.SkeletonId.LeftHandSkeleton));
+            rightHand = new QuestHandData(ManagerProvider.GetPlayer().GetSkeleton(Player.SkeletonId.RightHandSkeleton));
+#elif !UNITY_ANDROID && UNITY_EDITOR
             // TODO : これもPlayerに登録したものから取得するようにする?.
             leftHand = new LeapMotionHandData(HandId.LeftHand, provider);
             rightHand = new LeapMotionHandData(HandId.RightHand, provider);
