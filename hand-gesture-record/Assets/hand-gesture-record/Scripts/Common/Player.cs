@@ -38,7 +38,7 @@ namespace HandGestureRecord.Common
         OVRSkeleton leftSkeleton;
         OVRSkeleton rightSkeleton;
 
-        void Awake()
+        void Start()
         {
             ManagerProvider.RegisterPlayer(this);
             trackingObjDic = new Dictionary<TrackingId, Transform>();
@@ -47,8 +47,13 @@ namespace HandGestureRecord.Common
             trackingObjDic.Add(TrackingId.RightHand, trackingSpace.Find(RightHandObjName));
 
             skeletonDic = new Dictionary<SkeletonId, OVRSkeleton>();
+#if UNITY_ANDROID && !UNITY_EDITOR
             skeletonDic.Add(SkeletonId.LeftHandSkeleton, trackingObjDic[TrackingId.LeftHand].Find(HandPrefab).GetComponent<OVRSkeleton>());
             skeletonDic.Add(SkeletonId.RightHandSkeleton, trackingObjDic[TrackingId.RightHand].Find(HandPrefab).GetComponent<OVRSkeleton>());
+#elif UNITY_EDITOR
+            skeletonDic.Add(SkeletonId.LeftHandSkeleton, null);
+            skeletonDic.Add(SkeletonId.RightHandSkeleton, null);
+#endif
         }
 
 
