@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using HandGestureRecord.Common;
 using UnityEngine;
 
@@ -25,6 +26,7 @@ namespace HandGestureRecord.GestureInput
         [SerializeField] GestureRecordData gu;
         [SerializeField] GestureRecordData choki;
         [SerializeField] GestureRecordData par;
+        bool isInitialized = false;
         
         
         void Awake()
@@ -36,20 +38,14 @@ namespace HandGestureRecord.GestureInput
 
         void Start()
         {
-#if UNITY_ANDROID
-            // TODO : 今回のプロジェクトではQuestのPlayerはまだ実装していないのでここはコメントアウトしておく.
-            leftHand = new QuestHandData(ManagerProvider.GetPlayer().GetSkeleton(Player.SkeletonId.LeftHandSkeleton));
-            rightHand = new QuestHandData(ManagerProvider.GetPlayer().GetSkeleton(Player.SkeletonId.RightHandSkeleton));
-#elif !UNITY_ANDROID && UNITY_EDITOR
-            // TODO : これもPlayerに登録したものから取得するようにする?.
-            leftHand = new LeapMotionHandData(HandId.LeftHand, provider);
-            rightHand = new LeapMotionHandData(HandId.RightHand, provider);
-#endif
+            StartCoroutine(this.Initialize());
         }
 
 
         void Update()
         {
+            if (!isInitialized) return;
+            
             bool thumb = rightHand.IsFingerStraight(0.8f, FingerId.Thumb);
             bool index = rightHand.IsFingerStraight(0.8f, FingerId.Index);
             bool middle = rightHand.IsFingerStraight(0.8f, FingerId.Middle);
@@ -68,6 +64,28 @@ namespace HandGestureRecord.GestureInput
         }
 
 
+        IEnumerator Initialize()
+        {
+#if UNITY_ANDROID
+            Player player;
+            yield return new WaitUntil(() =>
+            {
+                player = ManagerProvider.GetPlayer();
+                return player != null;
+            });
+            // TODO : 今回のプロジェクトではQuestのPlayerはまだ実装していないのでここはコメントアウトしておく.
+            leftHand = new QuestHandData(ManagerProvider.GetPlayer().GetSkeleton(Player.SkeletonId.LeftHandSkeleton));
+            rightHand = new QuestHandData(ManagerProvider.GetPlayer().GetSkeleton(Player.SkeletonId.RightHandSkeleton));
+#elif !UNITY_ANDROID && UNITY_EDITOR
+            // TODO : これもPlayerに登録したものから取得するようにする?.
+            yiled return null;
+            leftHand = new LeapMotionHandData(HandId.LeftHand, provider);
+            rightHand = new LeapMotionHandData(HandId.RightHand, provider);
+#endif
+            isInitialized = true;
+        }
+
+        
         /// <summary>
         /// 指定した指が伸びているか否か.
         /// </summary>
