@@ -2686,9 +2686,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   provider: {fileID: 919798356}
-  gu: {fileID: 11400000, guid: 2073892fe32e7b24289403d9e513eedd, type: 2}
-  choki: {fileID: 11400000, guid: 52bb8d727cb42764ca26c52fd25fda1c, type: 2}
-  par: {fileID: 11400000, guid: 82916eabb6df1854fab6633bb59870d2, type: 2}
+  gu: {fileID: 0}
+  choki: {fileID: 0}
+  par: {fileID: 0}
 --- !u!4 &2086223872 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 484030, guid: c8515ebee271c0649b9db1321f3026a4,
