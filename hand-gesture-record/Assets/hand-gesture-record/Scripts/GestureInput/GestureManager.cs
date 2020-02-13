@@ -18,11 +18,9 @@ namespace HandGestureRecord.GestureInput
         HandDataBase leftHand;
         HandDataBase rightHand;
         
-        // とりあえずインスペクターでセットする.
-#if !UNITY_ANDROID && UNITY_EDITOR
-        [SerializeField] LeapServiceProvider provider;
-#endif
         // TODO : テスト用データ.
+        // とりあえずインスペクターでセットする.
+        [SerializeField] LeapServiceProvider provider;
         [SerializeField] GestureRecordData gu;
         [SerializeField] GestureRecordData choki;
         [SerializeField] GestureRecordData par;
@@ -58,9 +56,12 @@ namespace HandGestureRecord.GestureInput
             DebugWindow.SetDebugInfo("Ring", $"Ring {ring} : {rightHand.GetDotByFinger(FingerId.Ring)}");
             DebugWindow.SetDebugInfo("Pinky", $"Pinky {pinky} : {rightHand.GetDotByFinger(FingerId.Pinky)}");
 
-            DebugWindow.SetDebugInfo("Gesture - Gu", $"グー {this.CorrectGesture(HandId.RightHand, gu.Data)}");
-            DebugWindow.SetDebugInfo("Gesture - Choki", $"チョキ {this.CorrectGesture(HandId.RightHand, choki.Data)}");
-            DebugWindow.SetDebugInfo("Gesture - Par", $"パー {this.CorrectGesture(HandId.RightHand, par.Data)}");
+            if (gu != null && choki != null && par != null)
+            {
+                DebugWindow.SetDebugInfo("Gesture - Gu", $"グー {this.CorrectGesture(HandId.RightHand, gu.Data)}");
+                DebugWindow.SetDebugInfo("Gesture - Choki", $"チョキ {this.CorrectGesture(HandId.RightHand, choki.Data)}");
+                DebugWindow.SetDebugInfo("Gesture - Par", $"パー {this.CorrectGesture(HandId.RightHand, par.Data)}");
+            }
         }
 
 
@@ -78,7 +79,7 @@ namespace HandGestureRecord.GestureInput
             rightHand = new QuestHandData(ManagerProvider.GetPlayer().GetSkeleton(Player.SkeletonId.RightHandSkeleton));
 #elif !UNITY_ANDROID && UNITY_EDITOR
             // TODO : これもPlayerに登録したものから取得するようにする?.
-            yiled return null;
+            yield return null;
             leftHand = new LeapMotionHandData(HandId.LeftHand, provider);
             rightHand = new LeapMotionHandData(HandId.RightHand, provider);
 #endif
