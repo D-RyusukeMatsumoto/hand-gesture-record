@@ -20,7 +20,6 @@ namespace HandGestureRecord.GestureInput
         [SerializeField] float threshold;
         
         
-        
         void Start()
         {
             manager = ManagerProvider.GetRuntimeManager<GestureManager>();
@@ -84,9 +83,12 @@ namespace HandGestureRecord.GestureInput
                     ring = component.manager.IsFingerStraight(component.handId, FingerId.Ring, component.threshold),
                     pinky = component.manager.IsFingerStraight(component.handId, FingerId.Pinky, component.threshold)
                 };
-                var instance = new GestureRecordData(fingerStraightInfo);
-                
+                var instance = ScriptableObject.CreateInstance<GestureRecordData>();
+                EditorUtility.SetDirty(instance);
+                instance.SetData(fingerStraightInfo);
+
                 AssetDatabase.CreateAsset(instance, filePath.Replace(Application.dataPath, "Assets"));
+                AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
             }
             
