@@ -14,6 +14,7 @@ namespace HandGestureRecord.Common
 
 
         Dictionary<string, RuntimeManagerBase> managerDic = new Dictionary<string, RuntimeManagerBase>();
+        Player player;
 
 
         protected override void Awake()
@@ -23,6 +24,20 @@ namespace HandGestureRecord.Common
             SceneManager.activeSceneChanged += ActiveSceneChangeListener;
             SceneManager.sceneUnloaded += SceneUnLoadedListener;
         }
+
+
+        /// <summary>
+        /// Playerを取得.
+        /// </summary>
+        /// <returns></returns>
+        public static Player GetPlayer() => Instance.player;
+
+
+        /// <summary>
+        /// Playerを登録.
+        /// </summary>
+        /// <param name="argPlayer"></param>
+        public static void RegisterPlayer(Player argPlayer) => Instance.player = argPlayer;
 
 
         /// <summary>
