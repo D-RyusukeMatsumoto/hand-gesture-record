@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 
 namespace HandGestureRecord.GestureInput
 {
@@ -23,6 +29,43 @@ namespace HandGestureRecord.GestureInput
         {
             data = argData;
         }
+        
+        
+#if UNITY_EDITOR
+        /// <summary>
+        /// エディタ拡張.
+        /// </summary>
+        [CustomEditor(typeof(GestureRecordData))]
+        public class GestureRecordDataEditor : Editor
+        {
+            string path;
+            
+            void OnEnable()
+            {
+                path = AssetDatabase.GetAssetPath(target);
+            }
+
+
+            void OnDestroy()
+            {
+                if (!Application.isPlaying)
+                {
+                    if (!target)
+                    {
+                        // 削除時.
+                        Debug.Log("jejeje : " + path);
+                    }
+                    else
+                    {
+                        // フォーカスが外れた時.
+                        Debug.Log("hazureta : " + path);
+                    }
+                }
+            }
+        }
+
+
+#endif
 
     }
 }

@@ -58,7 +58,6 @@ namespace HandGestureRecord.GestureInput
                         // ここで保存.
                         this.SaveFile(component);
 
-                        // TODO : 一定期間での指の動作でのジェスチャ作成の時までは録画ボタンを押下した瞬間の指の状態だけをとることとする.
                         //isRecoredStarted = true;
                     }
                 }
@@ -71,6 +70,7 @@ namespace HandGestureRecord.GestureInput
             void SaveFile(
                 GestureRecorder component)
             {
+                // TODO : 保存先パスは固定にする?.
                 var filePath = EditorUtility.SaveFilePanel("SaveGestureFile", Application.dataPath, "anyFile", "asset");
                 if (string.IsNullOrEmpty(filePath))
                     return;

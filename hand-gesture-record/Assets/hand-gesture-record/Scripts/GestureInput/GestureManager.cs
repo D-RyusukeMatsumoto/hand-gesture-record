@@ -100,17 +100,12 @@ namespace HandGestureRecord.GestureInput
             FingerId fingerId,
             float threshold)
         {
-            bool ret = false;
             if (handId == HandId.LeftHand)
-            {
-                ret = leftHand != null && leftHand.IsFingerStraight(threshold, fingerId);
-            }
+                return leftHand != null && leftHand.IsFingerStraight(threshold, fingerId);
             else
-            {
-                ret = rightHand != null && rightHand.IsFingerStraight(threshold, fingerId);
-            }
+                return rightHand != null && rightHand.IsFingerStraight(threshold, fingerId);
 
-            return ret;
+            return false;
         }
 
         
