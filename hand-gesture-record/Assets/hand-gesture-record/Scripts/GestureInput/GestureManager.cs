@@ -31,6 +31,8 @@ namespace HandGestureRecord.GestureInput
         {
             ManagerProvider.RegisterRuntimeManager(this);
             DontDestroyOnLoad(gameObject);
+            
+            // ここで各種ジェスチャのパスを調べる?.
         }
 
 
@@ -74,7 +76,6 @@ namespace HandGestureRecord.GestureInput
                 player = ManagerProvider.GetPlayer();
                 return player != null;
             });
-            // TODO : 今回のプロジェクトではQuestのPlayerはまだ実装していないのでここはコメントアウトしておく.
             leftHand = new QuestHandData(ManagerProvider.GetPlayer().GetSkeleton(Player.SkeletonId.LeftHandSkeleton));
             rightHand = new QuestHandData(ManagerProvider.GetPlayer().GetSkeleton(Player.SkeletonId.RightHandSkeleton));
 #elif !UNITY_ANDROID && UNITY_EDITOR
@@ -118,6 +119,7 @@ namespace HandGestureRecord.GestureInput
         /// </summary>
         /// <param name="leftRight"></param>
         /// <param name="targetGesture"></param>
+        /// <param name="threshold"></param>
         /// <returns></returns>
         public bool CorrectGesture(
             HandId leftRight,
