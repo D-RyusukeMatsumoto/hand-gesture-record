@@ -2,6 +2,7 @@
 using System.Linq;
 using HandGestureRecord.Common;
 using UnityEngine;
+using System.IO;
 
 #if UNITY_EDITOR
 using Leap.Unity;
@@ -33,6 +34,15 @@ namespace HandGestureRecord.GestureInput
             DontDestroyOnLoad(gameObject);
             
             // ここで各種ジェスチャのパスを調べる?.
+            string path = "";
+            path = Application.dataPath + "/Resources/GestureData/";
+            Debug.Log(path);
+            Debug.Log("ディレクトリ : " + Directory.Exists(path));
+            string[] files = Directory.GetFiles(path, "*.asset");
+            foreach (var file in files)
+            {
+                Debug.Log(file);   
+            }
         }
 
 
