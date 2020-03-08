@@ -35,13 +35,12 @@ namespace HandGestureRecord.GestureInput
             
             // ここで各種ジェスチャのパスを調べる?.
             string path = "";
-            path = Application.dataPath + "/Resources/GestureData/";
+            path = Application.dataPath + "/Resources/GestureData/Choki.asset";
             Debug.Log(path);
-            Debug.Log("ディレクトリ : " + Directory.Exists(path));
-            string[] files = Directory.GetFiles(path, "*.asset");
-            foreach (var file in files)
+            var data = Resources.Load<GestureRecordData>(path);
+            if (data != null)
             {
-                Debug.Log(file);   
+                Debug.Log("data is not null");   
             }
         }
 
