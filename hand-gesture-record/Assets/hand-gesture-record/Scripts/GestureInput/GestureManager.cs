@@ -37,10 +37,11 @@ namespace HandGestureRecord.GestureInput
             string path = "";
             path = Application.dataPath + "/Resources/GestureData/Choki.asset";
             Debug.Log(path);
-            var data = Resources.Load<GestureRecordData>(path);
+            var data = Resources.Load("GestureData/Choki", typeof(GestureRecordData)) as GestureRecordData;
             if (data != null)
             {
-                Debug.Log("data is not null");   
+                Debug.Log("data is not null");
+                choki = data;
             }
         }
 
