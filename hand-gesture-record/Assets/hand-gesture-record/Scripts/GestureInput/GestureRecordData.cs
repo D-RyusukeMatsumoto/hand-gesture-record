@@ -1,7 +1,7 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 #if UNITY_EDITOR
+using HandGestureRecord.Settings;
 using UnityEditor;
 #endif
 
@@ -17,7 +17,8 @@ namespace HandGestureRecord.GestureInput
         [SerializeField] HandDataBase.FingerStraightInfo data;
 
         public HandDataBase.FingerStraightInfo Data => data;
-
+        public string GestureName => name;
+        
         public GestureRecordData(
             HandDataBase.FingerStraightInfo argData)
         {
@@ -31,7 +32,7 @@ namespace HandGestureRecord.GestureInput
         }
         
         
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
         /// <summary>
         /// エディタ拡張.
         /// </summary>
@@ -43,6 +44,7 @@ namespace HandGestureRecord.GestureInput
             void OnEnable()
             {
                 path = AssetDatabase.GetAssetPath(target);
+                GestureDataIndex.AddData(path);
             }
 
 
@@ -64,8 +66,7 @@ namespace HandGestureRecord.GestureInput
             }
         }
 
-
-#endif
+        #endif
 
     }
 }

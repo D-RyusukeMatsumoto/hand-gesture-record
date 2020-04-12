@@ -1,8 +1,9 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using HandGestureRecord.Common;
 using UnityEngine;
-using System.IO;
+using HandGestureRecord.Settings;
 
 #if UNITY_EDITOR
 using Leap.Unity;
@@ -18,13 +19,13 @@ namespace HandGestureRecord.GestureInput
     {
         HandDataBase leftHand;
         HandDataBase rightHand;
-        
-        // TODO : テスト用データ.
-        // とりあえずインスペクターでセットする.
+
+
+        // レコードデータのパスをまとめたインデックス.
+        [SerializeField] GestureDataIndex dataIndex;
+
         [SerializeField] LeapServiceProvider provider;
-        [SerializeField] GestureRecordData gu;
-        [SerializeField] GestureRecordData choki;
-        [SerializeField] GestureRecordData par;
+        [SerializeField] List<GestureRecordData> list = new List<GestureRecordData>();
         bool isInitialized = false;
         
         
@@ -32,17 +33,20 @@ namespace HandGestureRecord.GestureInput
         {
             ManagerProvider.RegisterRuntimeManager(this);
             DontDestroyOnLoad(gameObject);
-            
-            // ここで各種ジェスチャのパスを調べる?.
-            string path = "";
-            path = Application.dataPath + "/Resources/GestureData/Choki.asset";
-            Debug.Log(path);
-            var data = Resources.Load("GestureData/Choki", typeof(GestureRecordData)) as GestureRecordData;
-            if (data != null)
+ 
+            // ここでロードする.
+            if (dataIndex != null)
             {
-                Debug.Log("data is not null");
-                choki = data;
+                foreach (var path in dataIndex.PathIndex)
+                {
+                    var data = Resources.Load<GestureRecordData>(path.ResourcesPath);
+                    if (data != null)
+                    {
+                        list.Add(data);
+                    }
+                }
             }
+            
         }
 
 
@@ -68,11 +72,13 @@ namespace HandGestureRecord.GestureInput
             DebugWindow.SetDebugInfo("Ring", $"Ring {ring} : {rightHand.GetDotByFinger(FingerId.Ring)}");
             DebugWindow.SetDebugInfo("Pinky", $"Pinky {pinky} : {rightHand.GetDotByFinger(FingerId.Pinky)}");
 
-            if (gu != null && choki != null && par != null)
+
+            if (list != null)
             {
-                DebugWindow.SetDebugInfo("Gesture - Gu", $"グー {this.CorrectGesture(HandId.RightHand, gu.Data)}");
-                DebugWindow.SetDebugInfo("Gesture - Choki", $"チョキ {this.CorrectGesture(HandId.RightHand, choki.Data)}");
-                DebugWindow.SetDebugInfo("Gesture - Par", $"パー {this.CorrectGesture(HandId.RightHand, par.Data)}");
+                foreach (var element in list)
+                {
+                    DebugWindow.SetDebugInfo($"Gesture{element.GestureName}", $"{element.GestureName} {CorrectGesture(HandId.RightHand, element.Data)}");
+                }
             }
         }
 
