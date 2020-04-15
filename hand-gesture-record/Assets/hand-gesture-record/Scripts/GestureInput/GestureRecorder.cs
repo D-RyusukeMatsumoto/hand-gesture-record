@@ -56,7 +56,7 @@ namespace HandGestureRecord.GestureInput
                     if (GUILayout.Button("録画開始") && EditorApplication.isPlaying)
                     {
                         // ここで保存.
-                        this.SaveFile(component);
+                        SaveFile(component);
 
                         //isRecoredStarted = true;
                     }

@@ -43,7 +43,7 @@ namespace HandGestureRecord.Common
 
         void Update()
         {
-            this.UpdateMainText();            
+            UpdateMainText();            
         }
 
 

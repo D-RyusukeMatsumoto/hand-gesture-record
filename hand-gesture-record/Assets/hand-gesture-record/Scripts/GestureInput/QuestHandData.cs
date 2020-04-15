@@ -105,14 +105,14 @@ namespace HandGestureRecord.GestureInput
         {
             Vector3[] array = null;
 #if UNITY_ANDROID && !UNITY_EDITOR
-            array = this.CreatePositionFingerPositionArray(fingerId);
+            array = CreatePositionFingerPositionArray(fingerId);
 #endif
             if (array == null) return false;
             
             // 3未満の要素は計算に入れない.
             if (array.Length < 3) return false;
 
-            return threshold <= this.DotByFingerDirection(array);
+            return threshold <= DotByFingerDirection(array);
         }
 
 
@@ -125,7 +125,7 @@ namespace HandGestureRecord.GestureInput
             FingerId id)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
-            return this.DotByFingerDirection(this.CreatePositionFingerPositionArray(id));
+            return DotByFingerDirection(CreatePositionFingerPositionArray(id));
 #endif
             return 0f;
         }
@@ -141,11 +141,11 @@ namespace HandGestureRecord.GestureInput
 #if UNITY_ANDROID && !UNITY_EDITOR
             return new FingerStraightInfo
             {
-                thumb = this.IsFingerStraight(threshold, FingerId.Thumb),
-                index = this.IsFingerStraight(threshold, FingerId.Index),
-                middle = this.IsFingerStraight(threshold, FingerId.Middle),
-                ring = this.IsFingerStraight(threshold, FingerId.Ring),
-                pinky = this.IsFingerStraight(threshold, FingerId.Pinky)
+                thumb = IsFingerStraight(threshold, FingerId.Thumb),
+                index = IsFingerStraight(threshold, FingerId.Index),
+                middle = IsFingerStraight(threshold, FingerId.Middle),
+                ring = IsFingerStraight(threshold, FingerId.Ring),
+                pinky = IsFingerStraight(threshold, FingerId.Pinky)
             };
 #endif
             return new FingerStraightInfo { };

@@ -110,14 +110,14 @@ namespace HandGestureRecord.GestureInput
             float threshold,
             FingerId fingerId)
         {
-            this.Update();
-            Vector3[] array = this.CreatePositionFingerPositionArray(fingerId);
+            Update();
+            Vector3[] array = CreatePositionFingerPositionArray(fingerId);
             if (array == null) return false;
             
             // 3未満の要素は計算に入れない.
             if (array.Length < 3) return false;
 
-            return threshold <= this.DotByFingerDirection(array);
+            return threshold <= DotByFingerDirection(array);
         }
 
 
@@ -129,8 +129,8 @@ namespace HandGestureRecord.GestureInput
         public override float GetDotByFinger(
             FingerId id)
         {
-            this.Update();
-            return this.DotByFingerDirection(this.CreatePositionFingerPositionArray(id));            
+            Update();
+            return DotByFingerDirection(CreatePositionFingerPositionArray(id));            
         }
 
         
@@ -141,14 +141,14 @@ namespace HandGestureRecord.GestureInput
         public override FingerStraightInfo GetFingerStraightInfo(
             float threshold)
         {
-            this.Update();
+            Update();
             return new FingerStraightInfo
             {
-                thumb = this.IsFingerStraight(threshold, FingerId.Thumb),
-                index = this.IsFingerStraight(threshold,FingerId.Index),
-                middle = this.IsFingerStraight(threshold,FingerId.Middle),
-                ring = this.IsFingerStraight(threshold,FingerId.Ring),
-                pinky = this.IsFingerStraight(threshold,FingerId.Pinky)
+                thumb = IsFingerStraight(threshold, FingerId.Thumb),
+                index = IsFingerStraight(threshold,FingerId.Index),
+                middle = IsFingerStraight(threshold,FingerId.Middle),
+                ring = IsFingerStraight(threshold,FingerId.Ring),
+                pinky = IsFingerStraight(threshold,FingerId.Pinky)
             };
         }
 

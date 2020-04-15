@@ -52,7 +52,7 @@ namespace HandGestureRecord.GestureInput
 
         void Start()
         {
-            StartCoroutine(this.Initialize());
+            StartCoroutine(Initialize());
         }
 
 
