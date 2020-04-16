@@ -2,7 +2,9 @@
 using UnityEngine;
 
 
-namespace Common
+using Common;
+
+namespace Sample
 {
     /// <summary>
     /// プレイヤークラス.

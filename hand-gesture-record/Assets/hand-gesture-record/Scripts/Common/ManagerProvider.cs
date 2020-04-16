@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
+using Sample;
+
 
 namespace Common
 {
