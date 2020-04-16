@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-namespace HandGestureRecord.Common
+namespace Common
 {
     /// <summary>
     /// プレイヤークラス.

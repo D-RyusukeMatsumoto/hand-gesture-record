@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-using HandGestureRecord.Utility;
-using UnityEngine;
 
-namespace HandGestureRecord.Common
+namespace Common
 {
     /// <summary>
     /// ゲームマネージャ.

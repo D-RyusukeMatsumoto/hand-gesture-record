@@ -3,9 +3,8 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Text;
 
-using HandGestureRecord.Utility;
 
-namespace HandGestureRecord.Common
+namespace Common
 {
     /// <summary>
     /// デバッグウィンドウ.

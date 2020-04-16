@@ -1,5 +1,7 @@
-﻿using HandGestureRecord.Common;
-using UnityEngine;
+﻿using UnityEngine;
+
+// TODO : CommonはPackageに含めなくてもよいものを入れるところとしてる.
+using Common;
 
 #if UNITY_EDITOR
 using UnityEditor;

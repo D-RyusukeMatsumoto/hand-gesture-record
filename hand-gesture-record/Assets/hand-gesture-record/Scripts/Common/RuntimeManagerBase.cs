@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace HandGestureRecord.Common
+namespace Common
 {
     /// <summary>
     /// シングルトンではない通常のマネージャクラスを作成するためのベースクラス.

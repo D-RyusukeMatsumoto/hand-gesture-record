@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using HandGestureRecord.Common;
 using UnityEngine;
 using HandGestureRecord.Settings;
+
+// TODO : CommonはPackage出力には含めなくてもいいものにとどめる.
+using Common;
 
 #if UNITY_EDITOR
 using Leap.Unity;

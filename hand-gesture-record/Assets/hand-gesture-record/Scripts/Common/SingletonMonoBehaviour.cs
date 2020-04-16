@@ -2,7 +2,7 @@
 using System;
 
 
-namespace HandGestureRecord.Utility
+namespace Common
 {
     /// <summary>
     /// Singletonにするコンポーネントのベースクラス.
