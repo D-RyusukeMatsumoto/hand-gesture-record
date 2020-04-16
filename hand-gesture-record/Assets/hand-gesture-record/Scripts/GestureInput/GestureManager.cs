@@ -4,8 +4,7 @@ using System.Linq;
 using UnityEngine;
 using HandGestureRecord.Settings;
 
-// TODO : CommonはPackage出力には含めなくてもいいものにとどめる.
-using Common;
+using AppFw.Core;
 
 #if UNITY_EDITOR
 using Leap.Unity;

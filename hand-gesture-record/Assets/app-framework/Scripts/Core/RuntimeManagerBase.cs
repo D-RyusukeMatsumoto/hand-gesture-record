@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Common
+namespace AppFw.Core
 {
     /// <summary>
     /// シングルトンではない通常のマネージャクラスを作成するためのベースクラス.

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 
 
-namespace Common
+namespace AppFw.Core
 {
     /// <summary>
     /// デバッグウィンドウ.

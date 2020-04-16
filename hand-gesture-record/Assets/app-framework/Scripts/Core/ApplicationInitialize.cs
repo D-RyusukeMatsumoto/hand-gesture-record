@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace HandGestureRecord.Common
+namespace AppFw.Core
 {
     /// <summary>
     /// ゲームの開始時,Awakeより前に一度だけ呼び出される処理.

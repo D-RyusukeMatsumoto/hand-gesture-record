@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 // TODO : CommonはPackageに含めなくてもよいものを入れるところとしてる.
-using Common;
+using AppFw.Core;
 
 #if UNITY_EDITOR
 using UnityEditor;

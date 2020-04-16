@@ -2,7 +2,7 @@
 using System;
 
 
-namespace Common
+namespace AppFw.Core
 {
     /// <summary>
     /// Singletonにするコンポーネントのベースクラス.
@@ -20,7 +20,7 @@ namespace Common
                 {
                     Type t = typeof(T);
 
-                    instance = (T)FindObjectOfType (t);
+                    instance = (T)FindObjectOfType(t);
                     if (instance == null) 
                     {
                         Debug.LogError (t + " をアタッチしているGameObjectはありません");

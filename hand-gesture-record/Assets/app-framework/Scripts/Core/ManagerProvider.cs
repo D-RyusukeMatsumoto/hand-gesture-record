@@ -1,20 +1,17 @@
 ﻿using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-using Sample;
 
-
-namespace Common
+namespace AppFw.Core
 {
     /// <summary>
-    /// ゲームマネージャ.
+    /// マネージャを融通するクラス.
     /// </summary>
     public class ManagerProvider : SingletonMonoBehaviour<ManagerProvider>
     {
 
 
         Dictionary<string, RuntimeManagerBase> managerDic = new Dictionary<string, RuntimeManagerBase>();
-        Player player;
 
 
         protected override void Awake()
@@ -24,20 +21,6 @@ namespace Common
             SceneManager.activeSceneChanged += ActiveSceneChangeListener;
             SceneManager.sceneUnloaded += SceneUnLoadedListener;
         }
-
-
-        /// <summary>
-        /// Playerを取得.
-        /// </summary>
-        /// <returns></returns>
-        public static Player GetPlayer() => Instance.player;
-
-
-        /// <summary>
-        /// Playerを登録.
-        /// </summary>
-        /// <param name="argPlayer"></param>
-        public static void RegisterPlayer(Player argPlayer) => Instance.player = argPlayer;
 
 
         /// <summary>

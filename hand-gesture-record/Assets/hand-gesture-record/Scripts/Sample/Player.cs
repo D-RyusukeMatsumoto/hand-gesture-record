@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-using Common;
+using AppFw.Core;
 
 namespace Sample
 {
@@ -42,7 +42,8 @@ namespace Sample
 
         void Start()
         {
-            ManagerProvider.RegisterPlayer(this);
+            // TODO : PlayerManager的なものを用意してそれをManagerProviderに登録するようにする.
+            //ManagerProvider.RegisterPlayer(this);
             trackingObjDic = new Dictionary<TrackingId, Transform>();
             trackingObjDic.Add(TrackingId.Head, trackingSpace.Find(HeadObjName));
             trackingObjDic.Add(TrackingId.LeftHand, trackingSpace.Find(LeftHandObjName));
